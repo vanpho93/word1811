@@ -11,7 +11,9 @@ class App extends Component {
         { _id: 'abc2', en: 'Two', vn: 'Hai', isMemorized: false },
         { _id: 'abc3', en: 'Three', vn: 'Ba', isMemorized: false },
         { _id: 'abc4', en: 'Four', vn: 'Bốn', isMemorized: true },
-      ]
+      ],
+      txtEn: 'a',
+      txtVn: 'b'
     }
   }
 
@@ -57,17 +59,22 @@ class App extends Component {
     );
   }
   render() {
+    const { txtEn, txtVn, words } = this.state;
     return (
       <div className="App container">
         <div className="form-group" style={{ width: '200px' }}>
           <input
             placeholder="English"
             className="form-control"
+            value={txtEn}
+            onChange={evt => this.setState({ txtEn: evt.target.value })}
           />
           <br />
           <input
             placeholder="Vietnamese"
             className="form-control"
+            value={txtVn}
+            onChange={evt => this.setState({ txtVn: evt.target.value })}
           />
           <br />
           <div className="btn-container">
@@ -79,7 +86,7 @@ class App extends Component {
             </button>
           </div>
         </div>
-        {this.state.words.map(word => this.getWordItem(word))}
+        {words.map(word => this.getWordItem(word))}
       </div>
     );
   }
