@@ -23,7 +23,10 @@ class App extends Component {
 
   toggleWord(_id) {
     const { words } = this.state;
-    const newWords = words.filter(w => w._id !== _id);
+    const newWords = words.map(w => {
+      if (w._id !== _id) return w;
+      return { ...w, isMemorized: !w.isMemorized };
+    });
     this.setState({ words: newWords });
   }
 
@@ -37,7 +40,10 @@ class App extends Component {
           </h3>
         </div>
         <div className="btn-container">
-          <button className="btn btn-success">
+          <button
+            className="btn btn-success"
+            onClick={() => this.toggleWord(word._id)}
+          >
             {word.isMemorized ? 'Forgot' : 'Memorized'}
           </button>
           <button
