@@ -12,8 +12,9 @@ class App extends Component {
         { _id: 'abc3', en: 'Three', vn: 'Ba', isMemorized: false },
         { _id: 'abc4', en: 'Four', vn: 'Bốn', isMemorized: true },
       ],
-      txtEn: 'a',
-      txtVn: 'b'
+      txtEn: '',
+      txtVn: '',
+      shouldShowForm: false
     }
   }
 
@@ -58,10 +59,24 @@ class App extends Component {
       </div>
     );
   }
+
+  addWord() {
+    const { txtEn, txtVn, words } = this.state;
+    const word = {
+      _id: Math.random() + '',
+      en: txtEn,
+      vn: txtVn,
+      isMemorized: false
+    };
+    const newWords = [word, ...words];
+    this.setState({ words: newWords, txtEn: '', txtVn: '' });
+  }
+
   render() {
     const { txtEn, txtVn, words } = this.state;
     return (
       <div className="App container">
+        <button className="btn btn-success">Create new word</button>
         <div className="form-group" style={{ width: '200px' }}>
           <input
             placeholder="English"
@@ -78,7 +93,7 @@ class App extends Component {
           />
           <br />
           <div className="btn-container">
-            <button className="btn btn-success">
+            <button className="btn btn-success" onClick={() => this.addWord()}>
               Add word
             </button>
             <button className="btn btn-danger">
