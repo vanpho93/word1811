@@ -15,16 +15,37 @@ class App extends Component {
     }
   }
 
+  removeWord(_id) {
+    const { words } = this.state;
+    const newWords = words.filter(w => w._id !== _id);
+    this.setState({ words: newWords });
+  }
+
+  toggleWord(_id) {
+    const { words } = this.state;
+    const newWords = words.filter(w => w._id !== _id);
+    this.setState({ words: newWords });
+  }
+
   getWordItem(word) {
     return (
       <div className="word" key={word._id}>
         <div className="word-container">
           <h3 className="text-success">{word.en}</h3>
-          <h3 className="text-danger">{word.vn}</h3>
+          <h3 className="text-danger">
+            {word.isMemorized ? '------' : word.vn}
+          </h3>
         </div>
         <div className="btn-container">
-          <button className="btn btn-success">Forgot</button>
-          <button className="btn btn-warning">Remove</button>
+          <button className="btn btn-success">
+            {word.isMemorized ? 'Forgot' : 'Memorized'}
+          </button>
+          <button
+            className="btn btn-warning"
+            onClick={() => this.removeWord(word._id)}
+          >
+            Remove
+          </button>
         </div>
       </div>
     );
