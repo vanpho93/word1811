@@ -14,21 +14,25 @@ class App extends Component {
       ]
     }
   }
+
+  getWordItem(word) {
+    return (
+      <div className="word" key={word._id}>
+        <div className="word-container">
+          <h3 className="text-success">{word.en}</h3>
+          <h3 className="text-danger">{word.vn}</h3>
+        </div>
+        <div className="btn-container">
+          <button className="btn btn-success">Forgot</button>
+          <button className="btn btn-warning">Remove</button>
+        </div>
+      </div>
+    );
+  }
   render() {
     return (
       <div className="App container">
-        <div>
-          <div className="word">
-            <div className="word-container">
-              <h3 className="text-success">one</h3>
-              <h3 className="text-danger">một</h3>
-            </div>
-              <div className="btn-container">
-                <button className="btn btn-success">Forgot</button>
-                <button className="btn btn-warning">Remove</button>
-              </div>
-          </div>
-        </div>
+        { this.state.words.map(word => this.getWordItem(word)) }
       </div>
     );
   }
