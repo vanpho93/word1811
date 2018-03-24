@@ -20,6 +20,8 @@ class App extends Component {
     };
     this.onRemoveWord = this.onRemoveWord.bind(this);
     this.onToggleWord = this.onToggleWord.bind(this);
+    this.onToggleShouldShowForm = this.onToggleShouldShowForm.bind(this);
+    this.onAddWord = this.onAddWord.bind(this);
   }
 
   onRemoveWord(_id) {
@@ -37,8 +39,13 @@ class App extends Component {
     this.setState({ words: newWords });
   }
 
-  addWord() {
-    const { txtEn, txtVn, words } = this.state;
+  onToggleShouldShowForm() {
+    // this.setState({ shouldShowForm: !this.state.shouldShowForm });
+    this.setState(prevState => ({ shouldShowForm: !prevState.shouldShowForm  }));
+  }
+
+  onAddWord(txtEn, txtVn) {
+    const { words } = this.state;
     const word = {
       _id: Math.random() + '',
       en: txtEn,
@@ -46,14 +53,18 @@ class App extends Component {
       isMemorized: false
     };
     const newWords = [word, ...words];
-    this.setState({ words: newWords, txtEn: '', txtVn: '', shouldShowForm: false });
+    this.setState({ words: newWords, shouldShowForm: false });
   }
 
   render() {
     const { words, shouldShowForm } = this.state;
     return (
       <div className="App container">
-        <WordForm shouldShowForm={shouldShowForm} />
+        <WordForm
+          shouldShowForm={shouldShowForm}
+          onToggleShouldShowForm={this.onToggleShouldShowForm}  
+          onAddWord={this.onAddWord}
+        />
         {words.map(word => (
           <Word
             word={word}
