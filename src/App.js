@@ -18,10 +18,11 @@ class App extends Component {
       txtEn: '',
       txtVn: '',
       shouldShowForm: false
-    }
+    };
+    this.onRemoveWord = this.onRemoveWord.bind(this);
   }
 
-  removeWord(_id) {
+  onRemoveWord(_id) {
     const { words } = this.state;
     const newWords = words.filter(w => w._id !== _id);
     this.setState({ words: newWords });
@@ -70,6 +71,7 @@ class App extends Component {
       </div>
     );
   }
+
   addWord() {
     const { txtEn, txtVn, words } = this.state;
     const word = {
@@ -87,7 +89,7 @@ class App extends Component {
     return (
       <div className="App container">
         { this.getForm() }
-        {words.map(word => <Word word={word} key={word._id} />)}
+        {words.map(word => <Word word={word} onRemoveWord={this.onRemoveWord} key={word._id} />)}
       </div>
     );
   }

@@ -19,6 +19,9 @@ export class Word extends Component {
                 </button>
                 <button
                     className="btn btn-warning"
+                    onClick={() => {
+                        this.props.onRemoveWord(word._id);
+                    }}
                 >
                     Remove
                 </button>
