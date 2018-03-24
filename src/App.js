@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+
+import { Word } from './Word';
+
 import './App.css';
 
 class App extends Component {
@@ -31,33 +34,6 @@ class App extends Component {
       return { ...w, isMemorized: !w.isMemorized };
     });
     this.setState({ words: newWords });
-  }
-
-  getWordItem(word) {
-    return (
-      <div className="word" key={word._id}>
-        <div className="word-container">
-          <h3 className="text-success">{word.en}</h3>
-          <h3 className="text-danger">
-            {word.isMemorized ? '------' : word.vn}
-          </h3>
-        </div>
-        <div className="btn-container">
-          <button
-            className="btn btn-success"
-            onClick={() => this.toggleWord(word._id)}
-          >
-            {word.isMemorized ? 'Forgot' : 'Memorized'}
-          </button>
-          <button
-            className="btn btn-warning"
-            onClick={() => this.removeWord(word._id)}
-          >
-            Remove
-          </button>
-        </div>
-      </div>
-    );
   }
 
   getForm() {
@@ -111,7 +87,7 @@ class App extends Component {
     return (
       <div className="App container">
         { this.getForm() }
-        {words.map(word => this.getWordItem(word))}
+        {words.map(word => <Word word={word} key={word._id} />)}
       </div>
     );
   }
