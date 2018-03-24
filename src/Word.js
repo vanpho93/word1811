@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export class Word extends Component {
     render() {
-        const { word } = this.props;
+        const { word, onToggleWord, onRemoveWord } = this.props;
         return (
             <div className="word">
                 <div className="word-container">
@@ -14,14 +14,13 @@ export class Word extends Component {
                 <div className="btn-container">
                 <button
                     className="btn btn-success"
+                    onClick={() => onToggleWord(word._id)}
                 >
                     {word.isMemorized ? 'Forgot' : 'Memorized'}
                 </button>
                 <button
                     className="btn btn-warning"
-                    onClick={() => {
-                        this.props.onRemoveWord(word._id);
-                    }}
+                    onClick={() => onRemoveWord(word._id)}
                 >
                     Remove
                 </button>
