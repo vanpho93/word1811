@@ -3,6 +3,7 @@ import logo from './logo.svg';
 
 import { Word } from './Word';
 import { WordForm } from './WordForm';
+import { WordFilter } from './WordFilter';
 
 import './App.css';
 
@@ -16,12 +17,14 @@ class App extends Component {
         { _id: 'abc3', en: 'Three', vn: 'Ba', isMemorized: false },
         { _id: 'abc4', en: 'Four', vn: 'Bốn', isMemorized: true },
       ],
-      shouldShowForm: false
+      shouldShowForm: false,
+      filterStatus: 'SHOW_MEMORIZED' //SHOW_MEMORIZED SHOW_FORGOT
     };
     this.onRemoveWord = this.onRemoveWord.bind(this);
     this.onToggleWord = this.onToggleWord.bind(this);
     this.onToggleShouldShowForm = this.onToggleShouldShowForm.bind(this);
     this.onAddWord = this.onAddWord.bind(this);
+    this.onSetFilterStatus = this.onSetFilterStatus.bind(this);
   }
 
   onRemoveWord(_id) {
@@ -44,6 +47,10 @@ class App extends Component {
     this.setState(prevState => ({ shouldShowForm: !prevState.shouldShowForm  }));
   }
 
+  onSetFilterStatus(filterStatus) {
+    this.setState({ filterStatus });
+  }
+
   onAddWord(txtEn, txtVn) {
     const { words } = this.state;
     const word = {
@@ -56,8 +63,25 @@ class App extends Component {
     this.setState({ words: newWords, shouldShowForm: false });
   }
 
+  getListWords() {
+    const { words, filterStatus } = this.state;
+    const filteredWords = words.filter(word => {
+      if (filterStatus === 'SHOW_ALL') return true;
+      if (filterStatus === 'SHOW_MEMORIZED') return word.isMemorized;
+      return !word.isMemorized;
+    });
+    return filteredWords.map(word => (
+      <Word
+        word={word}
+        onRemoveWord={this.onRemoveWord}
+        onToggleWord={this.onToggleWord}
+        key={word._id}
+      />
+    ));
+  }
+
   render() {
-    const { words, shouldShowForm } = this.state;
+    const { shouldShowForm, filterStatus } = this.state;
     return (
       <div className="App container">
         <WordForm
@@ -65,14 +89,13 @@ class App extends Component {
           onToggleShouldShowForm={this.onToggleShouldShowForm}  
           onAddWord={this.onAddWord}
         />
-        {words.map(word => (
-          <Word
-            word={word}
-            onRemoveWord={this.onRemoveWord}
-            onToggleWord={this.onToggleWord}
-            key={word._id}
-          />
-        ))}
+        <br />
+        <br />
+        <WordFilter
+          filterStatus={filterStatus}
+          onSetFilterStatus={this.onSetFilterStatus}
+        />
+        { this.getListWords() }
       </div>
     );
   }
