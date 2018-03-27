@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-
+import { connect } from 'react-redux';
 import { Word } from './Word';
 import { WordForm } from './WordForm';
 import { WordFilter } from './WordFilter';
@@ -9,7 +8,7 @@ import './App.css';
 
 class App extends Component {
   getListWords() {
-    const { words, filterStatus } = this.state;
+    const { words, filterStatus } = this.props;
     const filteredWords = words.filter(word => {
       if (filterStatus === 'SHOW_ALL') return true;
       if (filterStatus === 'SHOW_MEMORIZED') return word.isMemorized;
@@ -26,7 +25,7 @@ class App extends Component {
   }
 
   render() {
-    const { shouldShowForm, filterStatus } = this.state;
+    const { shouldShowForm, filterStatus } = this.props;
     return (
       <div className="App container">
         <WordForm />
@@ -39,4 +38,10 @@ class App extends Component {
   }
 }
 
-export default App;
+
+const mapStateToProps = state => ({
+  words: state.words,
+  filterStatus: state.filterStatus
+});
+
+export default connect(mapStateToProps)(App);
