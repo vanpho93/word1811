@@ -12,6 +12,9 @@ const defaultState = {
 };
 
 function reducer(state = defaultState, action) {
+    if (action.type === 'TOGGLE_SHOULD_SHOW_FORM') {
+        return { ...state, shouldShowForm: !state.shouldShowForm };
+    }
     return state;
 }
 

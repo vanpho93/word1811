@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export class WordForm extends Component {
+export class WordFormComponent extends Component {
     constructor(props) {
         super(props);
         this.state = { txtEn: '', txtVn: '' };
@@ -14,10 +15,13 @@ export class WordForm extends Component {
     }
 
     render() {
-        const { shouldShowForm, onToggleShouldShowForm } = this.props;
+        const { shouldShowForm, dispatch } = this.props;
         const { txtEn, txtVn } = this.state;
         if (!shouldShowForm) return (
-            <button className="btn btn-success" onClick={onToggleShouldShowForm}>
+            <button
+                className="btn btn-success"
+                onClick={() => dispatch({ type: 'TOGGLE_SHOULD_SHOW_FORM' })}
+            >
                 Create new word
             </button>
         );
@@ -44,7 +48,10 @@ export class WordForm extends Component {
                     >
                         Add word
                     </button>
-                    <button className="btn btn-danger" onClick={onToggleShouldShowForm}>
+                    <button
+                        className="btn btn-danger"
+                        onClick={() => dispatch({ type: 'TOGGLE_SHOULD_SHOW_FORM' })}
+                    >
                         Cancel
                     </button>
                 </div>
@@ -52,3 +59,8 @@ export class WordForm extends Component {
         );
     }
 }
+
+const mapState = state => ({
+    shouldShowForm: state.shouldShowForm
+});
+export const WordForm = connect(mapState)(WordFormComponent);
