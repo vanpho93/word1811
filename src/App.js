@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
+
 import { Word } from './Word';
 import { WordForm } from './WordForm';
 import { WordFilter } from './WordFilter';
@@ -7,6 +9,15 @@ import { WordFilter } from './WordFilter';
 import './App.css';
 
 class App extends Component {
+  componentDidMount() {
+    axios.get('http://localhost:4000/word')
+    .then(response => {
+      const { success, words, error } = response.data;
+      if (!success) return alert(error);
+      this.props.dispatch({ type: 'SET_WORDS', words });
+    });
+  }
+
   getListWords() {
     const { words, filterStatus } = this.props;
     const filteredWords = words.filter(word => {
@@ -37,7 +48,6 @@ class App extends Component {
     );
   }
 }
-
 
 const mapStateToProps = state => ({
   words: state.words,
