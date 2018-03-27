@@ -8,12 +8,15 @@ const defaultState = {
         { _id: 'abc4', en: 'Four', vn: 'Bốn', isMemorized: true },
     ],
     shouldShowForm: false,
-    filterStatus: 'SHOW_MEMORIZED' //SHOW_MEMORIZED SHOW_FORGOT
+    filterStatus: 'SHOW_ALL' //SHOW_MEMORIZED SHOW_FORGOT
 };
 
 function reducer(state = defaultState, action) {
     if (action.type === 'TOGGLE_SHOULD_SHOW_FORM') {
         return { ...state, shouldShowForm: !state.shouldShowForm };
+    }
+    if (action.type === 'ADD_WORD') {
+        return { ...state, words: [action.word, ...state.words] };
     }
     return state;
 }
