@@ -16,7 +16,32 @@ function reducer(state = defaultState, action) {
         return { ...state, shouldShowForm: !state.shouldShowForm };
     }
     if (action.type === 'ADD_WORD') {
-        return { ...state, words: [action.word, ...state.words] };
+        return {
+            ...state,
+            words: [action.word, ...state.words],
+            shouldShowForm: false
+        };
+    }
+    if (action.type === 'REMOVE_WORD') {
+        return {
+            ...state,
+            words: state.words.filter(w => w._id !== action._id)
+        };
+    }
+    if (action.type === 'TOGGLE_WORD') {
+        return {
+            ...state,
+            words: state.words.map(w => {
+                if (w._id !== action._id) return w;
+                return { ...w, isMemorized: !w.isMemorized };
+            })
+        };
+    }
+    if (action.type === 'SET_FILTER') {
+        return {
+            ...state,
+            filterStatus: action.filterStatus
+        };
     }
     return state;
 }
