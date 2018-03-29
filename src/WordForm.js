@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as actionCreators from './redux/actionCreators';
 
 export class WordFormComponent extends Component {
     constructor(props) {
@@ -16,17 +17,17 @@ export class WordFormComponent extends Component {
             vn: txtVn,
             isMemorized: false
         };
-        this.props.dispatch({ type: 'ADD_WORD', word });
+        this.props.addWord(word);
         this.setState({ txtEn: '', txtVn: '' });
     }
 
     render() {
-        const { shouldShowForm, dispatch } = this.props;
+        const { shouldShowForm, toggleShouldShowForm } = this.props;
         const { txtEn, txtVn } = this.state;
         if (!shouldShowForm) return (
             <button
                 className="btn btn-success"
-                onClick={() => dispatch({ type: 'TOGGLE_SHOULD_SHOW_FORM' })}
+                onClick={toggleShouldShowForm}
             >
                 Create new word
             </button>
@@ -56,7 +57,7 @@ export class WordFormComponent extends Component {
                     </button>
                     <button
                         className="btn btn-danger"
-                        onClick={() => dispatch({ type: 'TOGGLE_SHOULD_SHOW_FORM' })}
+                        onClick={toggleShouldShowForm}
                     >
                         Cancel
                     </button>
@@ -69,4 +70,4 @@ export class WordFormComponent extends Component {
 const mapState = state => ({
     shouldShowForm: state.shouldShowForm
 });
-export const WordForm = connect(mapState)(WordFormComponent);
+export const WordForm = connect(mapState, actionCreators)(WordFormComponent);

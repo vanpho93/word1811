@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Word } from './Word';
 import { WordForm } from './WordForm';
 import { WordFilter } from './WordFilter';
+import * as actionCreators from './redux/actionCreators';
 
 import './App.css';
 
@@ -14,7 +15,7 @@ class App extends Component {
     .then(response => {
       const { success, words, error } = response.data;
       if (!success) return alert(error);
-      this.props.dispatch({ type: 'SET_WORDS', words });
+      this.props.setWords(words);
     });
   }
 
@@ -54,4 +55,4 @@ const mapStateToProps = state => ({
   filterStatus: state.filterStatus
 });
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, actionCreators)(App);
