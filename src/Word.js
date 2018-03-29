@@ -16,7 +16,7 @@ class WordComponent extends Component {
                 <div className="btn-container">
                 <button
                     className="btn btn-success"
-                    onClick={() => toggleWord(word._id)}
+                    onClick={() => toggleWord(word._id, !word.isMemorized)}
                 >
                     {word.isMemorized ? 'Forgot' : 'Memorized'}
                 </button>

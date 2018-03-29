@@ -2,12 +2,26 @@ import axios from 'axios';
 
 const URL = 'http://localhost:4000/word';
 
-export function toggleWord(_id) {
-    return { type: 'TOGGLE_WORD', _id };
+export function toggleWord(_id, isMemorized) {
+    return dispatch => {
+        axios.put(`${URL}/${_id}`, { isMemorized })
+        .then(response => {
+            const { success, error } = response.data;
+            if (!success) return alert(error);
+            dispatch({ type: 'TOGGLE_WORD', _id });
+        });
+    }
 }
 
 export function removeWord(_id) {
-    return { type: 'REMOVE_WORD', _id };
+    return dispatch => {
+        axios.delete(`${URL}/${_id}`)
+        .then(response => {
+            const { success, error } = response.data;
+            if (!success) return alert(error);
+            dispatch({ type: 'REMOVE_WORD', _id });
+        });
+    }
 }
 
 export function getAllWord() {
