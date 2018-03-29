@@ -11,12 +11,7 @@ import './App.css';
 
 class App extends Component {
   componentDidMount() {
-    axios.get('http://localhost:4000/word')
-    .then(response => {
-      const { success, words, error } = response.data;
-      if (!success) return alert(error);
-      this.props.setWords(words);
-    });
+    this.props.getAllWord();
   }
 
   getListWords() {

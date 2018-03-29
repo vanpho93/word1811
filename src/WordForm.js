@@ -11,13 +11,7 @@ export class WordFormComponent extends Component {
 
     addWord() {
         const { txtEn, txtVn } = this.state;
-        const word = {
-            _id: Math.random() + '',
-            en: txtEn,
-            vn: txtVn,
-            isMemorized: false
-        };
-        this.props.addWord(word);
+        this.props.addWord(txtEn, txtVn);
         this.setState({ txtEn: '', txtVn: '' });
     }
 
